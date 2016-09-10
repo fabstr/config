@@ -36,11 +36,13 @@
             shell: gsettings set org.gnome.desktop.background picture-uri file:///home/fabian/Dropbox/config/bakgrundsbild.jpg
             become: yes
             become_user: fabian
-                     
+
           - name: config git
-            shell: git config --global user.email "fs@fabianstrom.se" && git config --global user.name "Fabian Ström"
-
-
+            shell: git config --global {{item.name}} {{item.value}}
+            with_items:
+                  - { name: 'user.email', value: 'fs@fabianstrom.se' }
+                  - { name: 'user.name', value: 'Fabian Ström' }
+                  - { name: 'push.default', value: 'matching' }
 
           - name: inform that dropbox needs to be configured
             debug: msg="Do not forget to configure dropbox"
