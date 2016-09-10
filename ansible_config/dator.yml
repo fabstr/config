@@ -1,0 +1,46 @@
+---
+- hosts: dator
+  tasks:
+          - name: add neovim ppa
+            apt_repository: state=present repo='ppa:neovim-ppa/unstable'
+
+          - name: add spotify signing key
+            apt_key: keyserver='hkp://keyserver.ubuntu.com:80' id='BBEBDCB318AD50EC6865090613B00F1FD2C19886'
+
+          - name: add spotify repo
+            apt_repository: state=present repo='deb http://repository.spotify.com stable non-free'
+
+          - name: install stuff
+            apt: name={{item}} state=installed update_cache=yes
+            with_items: 
+                  - erlang
+                  - spotify-client
+                  - neovim
+                  - postgresql-9.5
+                  - git
+                  - pinta
+                  - nautilus-dropbox
+
+          - name: symlink zshrc and neovim config
+            file: src={{item.src}} dest={{item.dest}} state=link
+            with_items: 
+                  - { src: ~/Dropbox/config/zshrc, dest: ~/.zshrc }
+                  - { src: ~/Dropbox/config/nvim, dest: ~/.config/nvim }
+
+          - name: install vim plugins
+            shell: vim +PluginInstall +qall
+            become: yes
+            become_user: fabian
+
+          - name: set background image
+            shell: gsettings set org.gnome.desktop.background picture-uri file:///home/fabian/Dropbox/config/bakgrundsbild.jpg
+            become: yes
+            become_user: fabian
+                     
+          - name: config git
+            shell: git config --global user.email "fs@fabianstrom.se" && git config --global user.name "Fabian Ström"
+
+
+
+          - name: inform that dropbox needs to be configured
+            debug: msg="Do not forget to configure dropbox"
