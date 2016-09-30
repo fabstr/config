@@ -1,0 +1,25 @@
+---
+  - name: copy neovim config and bin
+    copy: src={{item.src}} dest={{item.dest}}
+    with_items: 
+          - { src: nvim, dest: ~/.config }
+          - { src: bin, dest: ~/ }
+
+  - name: fix zshrc template
+    template: src=zshrc dest=~/.zshrc
+
+  - name: make ~/uv directory
+    file: path=~/uv state=directory
+
+  - name: install vim plugins
+    shell: vim +PluginInstall +qall
+
+  - name: set background image
+    shell: gsettings set org.gnome.desktop.background picture-uri file://{{role_path}}/files/bakgrundsbild.jpg
+
+  - name: config git
+    git_config: name={{item.name}} value={{item.value}} scope=global
+    with_items:
+          - { name: 'user.email', value: 'fs@fabianstrom.se' }
+          - { name: 'user.name', value: 'Fabian Ström' }
+          - { name: 'push.default', value: 'matching' }

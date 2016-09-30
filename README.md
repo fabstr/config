@@ -6,4 +6,4 @@
 
 2. Run the playbook
 
-        sudo ansible-playbook -c local -i inventory dator.yml 
+        ./run.sh

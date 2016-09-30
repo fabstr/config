@@ -1,0 +1,49 @@
+---
+  - name: add neovim ppa
+    apt_repository: state=present repo='ppa:neovim-ppa/unstable'
+
+  - name: add spotify signing key
+    apt_key: keyserver='hkp://keyserver.ubuntu.com:80' id='BBEBDCB318AD50EC6865090613B00F1FD2C19886'
+
+  - name: add spotify repo
+    apt_repository: state=present repo='deb http://repository.spotify.com stable non-free'
+  
+  - name: add ansible repo
+    apt_repository: state=present repo='ppa:ansible/ansible'
+
+  - name: install stuff
+    apt: name={{item}} state=installed update_cache=yes
+    with_items: 
+          - ansible
+          - erlang
+          - clang
+          - exuberant-ctags
+          - git
+          - nautilus-dropbox
+          - neovim
+          - pidgin
+          - pinta
+          - postgresql-9.5
+          - rtorrent
+          - sl
+          - spotify-client
+          - steam
+          - tmux
+          - tree
+          - vlc
+
+  - name: make sure ansible is updated
+    apt: name=ansible state=latest update_cache=yes
+
+  - name: remove stuff
+    apt: name={{item}} state=removed 
+    with_items: 
+          - thunderbird
+          - rythmbox
+
+  - include: personal.yml
+    become: yes
+    become_user: fabian
+
+  - name: inform that dropbox needs to be configured
+    debug: msg="Do not forget to configure dropbox"

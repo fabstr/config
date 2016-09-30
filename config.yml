@@ -1,0 +1,4 @@
+---
+- hosts: dator
+  roles:
+    - dator
