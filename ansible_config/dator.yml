@@ -14,14 +14,27 @@
             apt: name={{item}} state=installed update_cache=yes
             with_items: 
                   - erlang
+                  - clang
+                  - exuberant-ctags
                   - git
                   - nautilus-dropbox
                   - neovim
+                  - pidgin
                   - pinta
                   - postgresql-9.5
-                  - spotify-client
-                  - tree
+                  - rtorrent
                   - sl
+                  - spotify-client
+                  - steam
+                  - tmux
+                  - tree
+                  - vlc
+
+          - name: remove stuff
+            apt: name={{item}} state=removed 
+            with_items: 
+                  - thunderbird
+                  - rythmbox
 
           - name: symlink zshrc and neovim config
             file: src={{item.src}} dest={{item.dest}} state=link
@@ -29,6 +42,11 @@
                   - { src: ~/Dropbox/config/zshrc, dest: ~/.zshrc }
                   - { src: ~/Dropbox/config/nvim, dest: ~/.config/nvim }
                   - { src: ~/Dropbox/config/bin, dest: ~/bin }
+
+          - name: make ~/uv directory
+            file: path=~/uv state=directory
+            become: yes
+            become_user: fabian
 
           - name: install vim plugins
             shell: vim +PluginInstall +qall
@@ -46,6 +64,8 @@
                   - { name: 'user.email', value: 'fs@fabianstrom.se' }
                   - { name: 'user.name', value: 'Fabian Ström' }
                   - { name: 'push.default', value: 'matching' }
+            become: yes
+            become_user: fabian
 
           - name: inform that dropbox needs to be configured
             debug: msg="Do not forget to configure dropbox"
