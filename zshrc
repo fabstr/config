@@ -15,7 +15,3 @@ PROMPT="%{$fg[red]%}%n%{$reset_color%}@%{$fg[blue]%}%m %{$fg_no_bold[yellow]%}%1
 RPROMPT="[%{$fg_no_bold[yellow]%}%?%{$reset_color%}]"
 
 export PATH=$PATH:/home/fabian/bin
-
-alias sl="sl -alF"
-alias rand="openssl rand -base64"
-alias nm="sudo systemctl restart network-manager"

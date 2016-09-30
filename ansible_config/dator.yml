@@ -14,18 +14,21 @@
             apt: name={{item}} state=installed update_cache=yes
             with_items: 
                   - erlang
-                  - spotify-client
-                  - neovim
-                  - postgresql-9.5
                   - git
-                  - pinta
                   - nautilus-dropbox
+                  - neovim
+                  - pinta
+                  - postgresql-9.5
+                  - spotify-client
+                  - tree
+                  - sl
 
           - name: symlink zshrc and neovim config
             file: src={{item.src}} dest={{item.dest}} state=link
             with_items: 
                   - { src: ~/Dropbox/config/zshrc, dest: ~/.zshrc }
                   - { src: ~/Dropbox/config/nvim, dest: ~/.config/nvim }
+                  - { src: ~/Dropbox/config/bin, dest: ~/bin }
 
           - name: install vim plugins
             shell: vim +PluginInstall +qall
