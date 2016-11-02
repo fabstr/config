@@ -8,7 +8,7 @@ Plugin 'VundleVim/Vundle.vim'             " pakethanterare
 Plugin 'altercation/vim-colors-solarized' " färgschema
 Plugin 'godlygeek/tabular'                " rada upp saker
 Plugin 'majutsushi/tagbar'                " visa lista med funktioner/metoder
-Plugin 'scrooloose/nerdcommenter'         " kommentera bort/fram kod
+Plugin 'tpope/vim-commentary'             " kommentera bort/fram kod
 Plugin 'scrooloose/syntastic'             " klaga när syntaxen är fel
 Plugin 'shougo/unite.vim'                 " behövs för vimfiler
 Plugin 'shougo/vimfiler.vim'              " leta bland filer
